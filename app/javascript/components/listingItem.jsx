@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
+import moment from "moment";
 
 const ItemContainer = styled.section`
   height: 180px;
@@ -21,6 +22,9 @@ const SquareMeterPrice = styled.span`
 const Picture = styled.img`
   height: 100px;
 `;
+const RightCorner = styled.div`
+  text-align: right;
+`;
 export default class ListingItem extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +35,8 @@ export default class ListingItem extends React.Component {
   render() {
     var settings = {
       dots: true,
+      fade: true,
+      speed: 3000,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
@@ -49,6 +55,9 @@ export default class ListingItem extends React.Component {
           </Slider>
         </PictureContainer>
         <InfoContainer>
+          {/* <RightCorner>
+            <p>{moment(this.props.first_publication_date).format("Do MMM")}</p>
+          </RightCorner> */}
           <h2>
             {this.props.listing.postal_code} | {this.props.listing.subject} |{" "}
             <Price>{this.currencyFormat(this.props.listing.price)} €</Price>
@@ -59,8 +68,12 @@ export default class ListingItem extends React.Component {
             </SquareMeterPrice>
             surface : {this.props.listing.surface}
             m2 | id: {this.props.listing.id} |
-            <b> {this.props.listing.external_provider.toUpperCase()}</b> url :{" "}
-            <a href={this.props.listing.url}>link</a>
+            <b> {this.props.listing.external_provider.toUpperCase()}</b> |
+            {moment(this.props.first_publication_date).format("Do MMM")} |
+            <a href={this.props.listing.url} target="_blank">
+              {" "}
+              link
+            </a>
           </p>
           <p>{this.props.listing.body.substring(0, 550)}</p>
         </InfoContainer>

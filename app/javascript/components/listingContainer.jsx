@@ -21,6 +21,7 @@ export default class ListingContainer extends React.Component {
     const pageNb = e.selected + 1;
     const res = await this.fetchListing(pageNb);
     this.setState({ listings: res.data });
+    window.scrollTo(0, 0);
   };
   render() {
     const pageCount = Math.round(this.state.listings.length / 5);
