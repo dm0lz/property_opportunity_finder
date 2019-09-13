@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  external_id: 1
+  first_publication_date: 2019-09-12 18:15:07
+  index_date: 2019-09-12 18:15:07
+  status: MyString
+  category_id: 1
+  category_name: MyString
+  subject: MyString
+  body: MyText
+  ad_type: MyString
+  url: MyString
+  price: 1
+  original_payload: 
+
+two:
+  external_id: 1
+  first_publication_date: 2019-09-12 18:15:07
+  index_date: 2019-09-12 18:15:07
+  status: MyString
+  category_id: 1
+  category_name: MyString
+  subject: MyString
+  body: MyText
+  ad_type: MyString
+  url: MyString
+  price: 1
+  original_payload: 
