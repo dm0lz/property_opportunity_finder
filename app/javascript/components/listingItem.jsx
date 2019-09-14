@@ -7,6 +7,7 @@ const ItemContainer = styled.section`
   height: 180px;
   display: inline-flex;
   border-bottom: 1px solid #cec7c7;
+  background-color: ${props => (props.isNew ? "#ffffe1" : "white")};
 `;
 const PictureContainer = styled.span`
   padding: 30px 50px 0px 50px;
@@ -44,7 +45,7 @@ export default class ListingItem extends React.Component {
       lazyLoad: true
     };
     return (
-      <ItemContainer>
+      <ItemContainer isNew={this.props.listing.is_new}>
         <PictureContainer>
           <Slider {...settings}>
             {this.props.listing.pictures &&
@@ -69,7 +70,8 @@ export default class ListingItem extends React.Component {
             surface : {this.props.listing.surface}
             m2 | id: {this.props.listing.id} |
             <b> {this.props.listing.external_provider.toUpperCase()}</b> |
-            {moment(this.props.first_publication_date).format("Do MMM")} |
+            {moment(this.props.listing.first_publication_date).format("DD/MM")}{" "}
+            |
             <a href={this.props.listing.url} target="_blank">
               {" "}
               link
