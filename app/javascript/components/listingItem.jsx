@@ -4,14 +4,14 @@ import Slider from "react-slick";
 import moment from "moment";
 
 const ItemContainer = styled.section`
-  height: 180px;
-  display: inline-flex;
+  //height: 180px;
+  //display: inline-flex;
   border-bottom: 1px solid #cec7c7;
   background-color: ${props => (props.isNew ? "#ffffe1" : "white")};
 `;
 const PictureContainer = styled.span`
   padding: 30px 50px 0px 50px;
-  max-width: 150px;
+  //max-width: 150px;
 `;
 const InfoContainer = styled.span``;
 const Price = styled.span`
@@ -26,6 +26,15 @@ const Picture = styled.img`
 const RightCorner = styled.div`
   text-align: right;
 `;
+const Title = styled.h2`
+  margin-top: 10px;
+  color: #6b7382;
+`;
+const Link = styled.a`
+  &:hover {
+    text-decoration: none;
+  }
+`;
 export default class ListingItem extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +45,7 @@ export default class ListingItem extends React.Component {
   render() {
     var settings = {
       dots: true,
-      fade: true,
+      //fade: true,
       speed: 3000,
       infinite: true,
       speed: 500,
@@ -45,8 +54,8 @@ export default class ListingItem extends React.Component {
       lazyLoad: true
     };
     return (
-      <ItemContainer isNew={this.props.listing.is_new}>
-        <PictureContainer>
+      <ItemContainer className="row" isNew={this.props.listing.is_new}>
+        <PictureContainer className="col-sm-2">
           <Slider {...settings}>
             {this.props.listing.pictures &&
               this.props.listing.pictures.length > 0 &&
@@ -55,29 +64,46 @@ export default class ListingItem extends React.Component {
               })}
           </Slider>
         </PictureContainer>
-        <InfoContainer>
+        <InfoContainer className="col-sm-10">
           {/* <RightCorner>
             <p>{moment(this.props.first_publication_date).format("Do MMM")}</p>
           </RightCorner> */}
-          <h2>
-            {this.props.listing.postal_code} | {this.props.listing.subject} |{" "}
-            <Price>{this.currencyFormat(this.props.listing.price)} €</Price>
-          </h2>
+          <Link href={this.props.listing.url} target="_blank">
+            <Title>{this.props.listing.subject} </Title>
+          </Link>
+
           <p>
             <SquareMeterPrice>
-              {this.currencyFormat(this.props.listing.square_meter_price)} €/m2{" "}
+              <span className="badge badge-success">
+                {this.currencyFormat(this.props.listing.square_meter_price)}{" "}
+                €/m2
+              </span>{" "}
             </SquareMeterPrice>
-            surface : {this.props.listing.surface}
-            m2 | id: {this.props.listing.id} |
-            <b> {this.props.listing.external_provider.toUpperCase()}</b> |
-            {moment(this.props.listing.first_publication_date).format("DD/MM")}{" "}
-            |
-            <a href={this.props.listing.url} target="_blank">
+            <span className="badge badge-info">
+              {this.props.listing.surface}m2
+            </span>{" "}
+            <span className="badge badge-warning">
+              {this.props.listing.external_provider.toUpperCase()}
+            </span>{" "}
+            <span className="badge badge-secondary">
+              {moment(this.props.listing.first_publication_date).format(
+                "DD/MM"
+              )}
+            </span>{" "}
+            <span className="badge badge-info">
               {" "}
-              link
-            </a>
+              {this.props.listing.postal_code}{" "}
+            </span>{" "}
+            <span className="badge badge-danger">
+              {" "}
+              {this.currencyFormat(this.props.listing.price)} €
+            </span>{" "}
+            <span className="badge badge-primary">
+              {" "}
+              {this.props.listing.id}{" "}
+            </span>{" "}
           </p>
-          <p>{this.props.listing.body.substring(0, 550)}</p>
+          <p>{this.props.listing.body.substring(0, 430)}</p>
         </InfoContainer>
       </ItemContainer>
     );

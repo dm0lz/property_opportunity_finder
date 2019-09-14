@@ -6,8 +6,11 @@ import styled from "styled-components";
 
 const TotalCount = styled.span`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 7px;
+  right: 7px;
+`;
+const Container = styled.div`
+  margin-top: 20px;
 `;
 export default class ListingContainer extends React.Component {
   constructor(props) {
@@ -36,25 +39,29 @@ export default class ListingContainer extends React.Component {
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     return (
-      <div>
-        <TotalCount>{this.state.listingsCount} Annonces</TotalCount>
+      <Container className="container-fluid">
+        <TotalCount className="badge badge-danger">
+          {this.state.listingsCount} Annonces
+        </TotalCount>
         {this.state.listings.map((item, index) => (
           <ListingItem key={index} listing={item}></ListingItem>
         ))}
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
-      </div>
+        <nav>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"page-item"}
+            pageCount={10}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
+        </nav>
+      </Container>
     );
   }
 }

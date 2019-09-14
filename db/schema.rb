@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_09_12_161507) do
     t.text "pictures", default: [], array: true
     t.string "external_provider"
     t.string "real_estate_type"
+    t.boolean "junk", default: false
     t.jsonb "original_payload"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

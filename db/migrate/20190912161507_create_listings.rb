@@ -19,6 +19,7 @@ class CreateListings < ActiveRecord::Migration[6.0]
       t.text :pictures, array: true, default: []
       t.string :external_provider
       t.string :real_estate_type
+      t.boolean :junk, default: false
       t.jsonb :original_payload
 
       t.timestamps
