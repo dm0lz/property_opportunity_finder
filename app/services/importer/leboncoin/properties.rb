@@ -2,10 +2,10 @@ class Importer::Leboncoin::Properties
   def perform
     options = {}
     options[:postal_codes] = ["69001", "69002", "69003", "69006", "69007"]
+    count = 0
     begin
-      count = 0
       properties = Fetcher::Leboncoin::Properties.new(options).perform
-    rescue => Net::ReadTimeout
+    rescue => e
       count += count
       retry if count < 5
     end
