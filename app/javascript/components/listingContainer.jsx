@@ -103,7 +103,9 @@ export default class ListingContainer extends React.Component {
       "square_meter_price:asc",
       "square_meter_price:desc",
       "price:asc",
-      "price:desc"
+      "price:desc",
+      "surface:asc",
+      "surface:desc"
     ];
     const currentOptionValue = `${this.state.sortBy}:${this.state.sortOrder}`;
     return (

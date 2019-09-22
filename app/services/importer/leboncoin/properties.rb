@@ -6,6 +6,7 @@ class Importer::Leboncoin::Properties
     begin
       properties = Fetcher::Leboncoin::Properties.new(options).perform
     rescue => e
+      puts e
       count += count
       retry if count < 5
     end
