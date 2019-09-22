@@ -100,10 +100,10 @@ export default class ListingContainer extends React.Component {
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
-      "price:asc",
-      "price:desc",
       "square_meter_price:asc",
-      "square_meter_price:desc"
+      "square_meter_price:desc",
+      "price:asc",
+      "price:desc"
     ];
     const currentOptionValue = `${this.state.sortBy}:${this.state.sortOrder}`;
     return (
