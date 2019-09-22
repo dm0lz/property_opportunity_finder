@@ -5,10 +5,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ListingContainer from "components/listingContainer";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <ListingContainer />,
+    <Router>
+      <Route path="/" component={ListingContainer} />
+    </Router>,
     document.body.appendChild(document.createElement("div"))
   );
 });

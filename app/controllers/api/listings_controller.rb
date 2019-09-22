@@ -4,7 +4,7 @@ class Api::ListingsController < ApplicationController
       .where(junk: false)
       .where.not(real_estate_type: 'parking')
       .where("first_publication_date >= :date", date: DateTime.current - 30.days)
-      .order(square_meter_price: :asc)
+      .order("#{params[:sort_by]} #{params[:sort_order].upcase}")
     @listing_count = @listings.count
     @listings = @listings.page(params[:page]).per(25)
 

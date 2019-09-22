@@ -79,8 +79,16 @@ export default class ListingItem extends React.Component {
                 €/m2
               </span>{" "}
             </SquareMeterPrice>
+            <span className="badge badge-danger">
+              {" "}
+              {this.currencyFormat(this.props.listing.price)} €
+            </span>{" "}
             <span className="badge badge-info">
               {this.props.listing.surface}m2
+            </span>{" "}
+            <span className="badge badge-secondary">
+              {" "}
+              {this.props.listing.postal_code}{" "}
             </span>{" "}
             <span className="badge badge-warning">
               {this.props.listing.external_provider.toUpperCase()}
@@ -89,14 +97,6 @@ export default class ListingItem extends React.Component {
               {moment(this.props.listing.first_publication_date).format(
                 "DD/MM"
               )}
-            </span>{" "}
-            <span className="badge badge-info">
-              {" "}
-              {this.props.listing.postal_code}{" "}
-            </span>{" "}
-            <span className="badge badge-danger">
-              {" "}
-              {this.currencyFormat(this.props.listing.price)} €
             </span>{" "}
             <span className="badge badge-primary">
               {" "}

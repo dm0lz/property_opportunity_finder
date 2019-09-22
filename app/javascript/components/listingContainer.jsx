@@ -26,6 +26,12 @@ const Container = styled.div`
 const CtaWrapper = styled.div`
   margin-bottom: 50px;
 `;
+const SortListingSelect = styled.span`
+  position: absolute;
+  top: 7px;
+  left: 273px;
+  width: 230px;
+`;
 export default class ListingContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -33,11 +39,20 @@ export default class ListingContainer extends React.Component {
       listings: [],
       listingsCount: 0,
       pendingRefresh: false,
-      pendingReset: false
+      pendingReset: false,
+      sortBy: "square_meter_price",
+      sortOrder: "asc"
     };
   }
   async componentDidMount() {
-    this.getListing();
+    const url = new URL(location.href);
+    this.setState(
+      {
+        sortBy: url.searchParams.get("sort_by"),
+        sortOrder: url.searchParams.get("sort_order")
+      },
+      () => this.getListing()
+    );
   }
   getListing = async () => {
     const res = await this.fetchListing(0);
@@ -47,7 +62,10 @@ export default class ListingContainer extends React.Component {
     });
   };
   fetchListing = async pageNb => {
-    return await axios.get(`/api/listings?page=${pageNb}`);
+    return await axios.get(
+      `/api/listings?page=${pageNb}&sort_by=${this.state.sortBy ||
+        "square_meter_price"}&sort_order=${this.state.sortOrder || "asc"}`
+    );
   };
   refreshListing = async () => {
     this.setState({ pendingRefresh: true });
@@ -67,8 +85,27 @@ export default class ListingContainer extends React.Component {
     this.setState({ pendingReset: false });
     this.getListing();
   };
+  sortedListing = listing => {
+    return listing.sort((key, value) => {
+      return key.price - value.price;
+    });
+  };
+  sortListing = e => {
+    console.log(e.target.value);
+    const [sortBy, sortOrder] = e.target.value.split(":");
+    this.setState({ sortBy, sortOrder }, () => this.getListing());
+    const newUrl = `?sort_by=${sortBy}&sort_order=${sortOrder}`;
+    this.props.history.push(newUrl);
+  };
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
+    const options = [
+      "price:asc",
+      "price:desc",
+      "square_meter_price:asc",
+      "square_meter_price:desc"
+    ];
+    const currentOptionValue = `${this.state.sortBy}:${this.state.sortOrder}`;
     return (
       <Container className="container-fluid">
         <CtaWrapper>
@@ -86,6 +123,25 @@ export default class ListingContainer extends React.Component {
           >
             Reset listing
           </ResetButton>
+          <SortListingSelect className="form-group">
+            <select
+              defaultValue={currentOptionValue}
+              onChange={this.sortListing}
+              className="form-control"
+            >
+              {options.map((option, key) => {
+                return (
+                  <option
+                    key={key}
+                    selected={option === currentOptionValue}
+                    value={option}
+                  >
+                    {option.split(":").join(": ")}
+                  </option>
+                );
+              })}
+            </select>
+          </SortListingSelect>
         </CtaWrapper>
         <TotalCount className="badge badge-warning">
           {this.state.listingsCount} Annonces
