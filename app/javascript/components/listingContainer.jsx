@@ -3,6 +3,7 @@ import axios from "axios";
 import ListingItem from "components/listingItem";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
+import Select from "react-select";
 
 const TotalCount = styled.span`
   position: absolute;
@@ -32,16 +33,35 @@ const SortListingSelect = styled.span`
   left: 273px;
   width: 230px;
 `;
+const ZipcodeSelectionWrapper = styled.span`
+  display: inline-flex;
+  position: absolute;
+  top: 7px;
+  left: 514px;
+`;
 export default class ListingContainer extends React.Component {
   constructor(props) {
     super(props);
+    const zipcodeOptions = [
+      { value: "69001", label: "1er" },
+      { value: "69002", label: "2eme" },
+      { value: "69003", label: "3eme" },
+      { value: "69004", label: "4eme" },
+      { value: "69005", label: "5eme" },
+      { value: "69006", label: "6eme" },
+      { value: "69007", label: "7eme" },
+      { value: "69008", label: "8eme" },
+      { value: "69009", label: "9eme" }
+    ];
     this.state = {
       listings: [],
       listingsCount: 0,
       pendingRefresh: false,
       pendingReset: false,
       sortBy: "square_meter_price",
-      sortOrder: "asc"
+      sortOrder: "asc",
+      zipcodeOptions: zipcodeOptions,
+      selectedZipcodeOptions: zipcodeOptions
     };
   }
   async componentDidMount() {
@@ -64,7 +84,10 @@ export default class ListingContainer extends React.Component {
   fetchListing = async pageNb => {
     return await axios.get(
       `/api/listings?page=${pageNb}&sort_by=${this.state.sortBy ||
-        "square_meter_price"}&sort_order=${this.state.sortOrder || "asc"}`
+        "square_meter_price"}&sort_order=${this.state.sortOrder ||
+        "asc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
+        zipcode => zipcode.value
+      )}`
     );
   };
   refreshListing = async () => {
@@ -97,6 +120,9 @@ export default class ListingContainer extends React.Component {
     const newUrl = `?sort_by=${sortBy}&sort_order=${sortOrder}`;
     this.props.history.push(newUrl);
   };
+  handleZipcodeChange = e => {
+    this.setState({ selectedZipcodeOptions: e }, () => this.getListing());
+  };
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
@@ -105,7 +131,9 @@ export default class ListingContainer extends React.Component {
       "price:asc",
       "price:desc",
       "surface:asc",
-      "surface:desc"
+      "surface:desc",
+      "first_publication_date:asc",
+      "first_publication_date:desc"
     ];
     const currentOptionValue = `${this.state.sortBy}:${this.state.sortOrder}`;
     return (
@@ -144,6 +172,18 @@ export default class ListingContainer extends React.Component {
               })}
             </select>
           </SortListingSelect>
+          <ZipcodeSelectionWrapper>
+            <Select
+              className="zipcode-select"
+              style={{
+                width: "150px"
+              }}
+              value={this.state.selectedZipcodeOptions}
+              onChange={this.handleZipcodeChange}
+              isMulti={true}
+              options={this.state.zipcodeOptions}
+            />
+          </ZipcodeSelectionWrapper>
         </CtaWrapper>
         <TotalCount className="badge badge-warning">
           {this.state.listingsCount} Annonces
