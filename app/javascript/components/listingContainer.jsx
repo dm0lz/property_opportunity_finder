@@ -61,7 +61,7 @@ export default class ListingContainer extends React.Component {
       sortBy: "square_meter_price",
       sortOrder: "asc",
       zipcodeOptions: zipcodeOptions,
-      selectedZipcodeOptions: zipcodeOptions
+      selectedZipcodeOptions: [{ value: "69002", label: "2eme" }]
     };
   }
   async componentDidMount() {
