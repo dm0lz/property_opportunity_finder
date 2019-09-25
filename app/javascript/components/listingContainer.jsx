@@ -19,7 +19,7 @@ const RefreshButton = styled.button`
 const ResetButton = styled.button`
   position: absolute;
   top: 7px;
-  left: 147px;
+  left: 197px;
 `;
 const Container = styled.div`
   margin-top: 20px;
@@ -30,14 +30,14 @@ const CtaWrapper = styled.div`
 const SortListingSelect = styled.span`
   position: absolute;
   top: 7px;
-  left: 273px;
-  width: 230px;
+  left: 410px;
+  width: 210px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 7px;
-  left: 514px;
+  left: 628px;
 `;
 export default class ListingContainer extends React.Component {
   constructor(props) {
@@ -114,8 +114,8 @@ export default class ListingContainer extends React.Component {
     });
   };
   sortListing = e => {
-    console.log(e.target.value);
-    const [sortBy, sortOrder] = e.target.value.split(":");
+    console.log(e);
+    const [sortBy, sortOrder] = e.value.split(":");
     this.setState({ sortBy, sortOrder }, () => this.getListing());
     const newUrl = `?sort_by=${sortBy}&sort_order=${sortOrder}`;
     this.props.history.push(newUrl);
@@ -126,16 +126,18 @@ export default class ListingContainer extends React.Component {
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
-      "square_meter_price:asc",
-      "square_meter_price:desc",
-      "price:asc",
-      "price:desc",
-      "surface:asc",
-      "surface:desc",
-      "first_publication_date:asc",
-      "first_publication_date:desc"
+      { label: "prix au m2 ascendant", value: "square_meter_price:asc" },
+      { label: "prix au m2 descendant", value: "square_meter_price:desc" },
+      { label: "prix ascendant", value: "price:asc" },
+      { label: "prix descendant", value: "price:desc" },
+      { label: "surface ascendant", value: "surface:asc" },
+      { label: "surface descendant", value: "surface:desc" },
+      { label: "date ascendant", value: "first_publication_date:asc" },
+      { label: "date descendant", value: "first_publication_date:desc" }
     ];
-    const currentOptionValue = `${this.state.sortBy}:${this.state.sortOrder}`;
+    const currentOptionValue = options.find(
+      el => el.value === `${this.state.sortBy}:${this.state.sortOrder}`
+    );
     return (
       <Container className="container-fluid">
         <CtaWrapper>
@@ -144,33 +146,22 @@ export default class ListingContainer extends React.Component {
             onClick={this.refreshListing}
             disabled={this.state.pendingRefresh}
           >
-            Refresh listing
+            Mettre à jour le listing
           </RefreshButton>
           <ResetButton
             className="btn btn-danger"
             onClick={this.resetListing}
             disabled={this.state.pendingReset}
           >
-            Reset listing
+            Remettre à zéro le listing
           </ResetButton>
           <SortListingSelect className="form-group">
-            <select
-              defaultValue={currentOptionValue}
+            <Select
+              value={currentOptionValue}
               onChange={this.sortListing}
-              className="form-control"
-            >
-              {options.map((option, key) => {
-                return (
-                  <option
-                    key={key}
-                    selected={option === currentOptionValue}
-                    value={option}
-                  >
-                    {option.split(":").join(": ")}
-                  </option>
-                );
-              })}
-            </select>
+              isMulti={false}
+              options={options}
+            />
           </SortListingSelect>
           <ZipcodeSelectionWrapper>
             <Select
