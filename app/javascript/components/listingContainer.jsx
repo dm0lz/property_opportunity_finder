@@ -137,10 +137,10 @@ export default class ListingContainer extends React.Component {
       { label: "prix au m2 descendant", value: "square_meter_price:desc" },
       { label: "prix ascendant", value: "price:asc" },
       { label: "prix descendant", value: "price:desc" },
-      { label: "surface ascendant", value: "surface:asc" },
-      { label: "surface descendant", value: "surface:desc" },
-      { label: "date ascendant", value: "first_publication_date:asc" },
-      { label: "date descendant", value: "first_publication_date:desc" }
+      { label: "surface ascendante", value: "surface:asc" },
+      { label: "surface descendante", value: "surface:desc" },
+      { label: "date ascendante", value: "first_publication_date:asc" },
+      { label: "date descendante", value: "first_publication_date:desc" }
     ];
     const currentOptionValue = options.find(
       el => el.value === `${this.state.sortBy}:${this.state.sortOrder}`

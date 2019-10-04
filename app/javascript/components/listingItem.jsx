@@ -6,10 +6,12 @@ import moment from "moment";
 const ItemContainer = styled.section`
   //height: 180px;
   //display: inline-flex;
-  border-bottom: 1px solid #cec7c7;
+  border-bottom: 1px dotted #cec7c7;
   background-color: ${props => (props.isNew ? "#ffffe1" : "white")};
 `;
 const PictureContainer = styled.span`
+  position: relative;
+  bottom: 20px;
   padding: 30px 50px 0px 50px;
   //max-width: 150px;
 `;
@@ -21,7 +23,8 @@ const SquareMeterPrice = styled.span`
   color: red;
 `;
 const Picture = styled.img`
-  height: 100px;
+  height: 145px;
+  border-radius: 5px;
 `;
 const RightCorner = styled.div`
   text-align: right;
@@ -93,15 +96,15 @@ export default class ListingItem extends React.Component {
             <span className="badge badge-warning">
               {this.props.listing.external_provider.toUpperCase()}
             </span>{" "}
-            <span className="badge badge-secondary">
+            <span className="badge badge-primary">
               {moment(this.props.listing.first_publication_date).format(
-                "DD/MM"
+                "DD MMM"
               )}
             </span>{" "}
-            <span className="badge badge-primary">
+            {/* <span className="badge badge-primary">
               {" "}
               {this.props.listing.id}{" "}
-            </span>{" "}
+            </span>{" "} */}
           </p>
           <p>{this.props.listing.body.substring(0, 430)}</p>
         </InfoContainer>
