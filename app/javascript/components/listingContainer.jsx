@@ -30,14 +30,13 @@ const CtaWrapper = styled.div`
 const SortListingSelect = styled.span`
   position: absolute;
   top: 7px;
-  left: 410px;
   width: 210px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 7px;
-  left: 628px;
+  left: 239px;
 `;
 export default class ListingContainer extends React.Component {
   constructor(props) {
@@ -61,7 +60,15 @@ export default class ListingContainer extends React.Component {
       sortBy: "square_meter_price",
       sortOrder: "asc",
       zipcodeOptions: zipcodeOptions,
-      selectedZipcodeOptions: [{ value: "69002", label: "2eme" }]
+      selectedZipcodeOptions: [
+        { value: "69001", label: "1er" },
+        { value: "69002", label: "2eme" },
+        { value: "69003", label: "3eme" },
+        { value: "69004", label: "4eme" },
+        { value: "69005", label: "5eme" },
+        { value: "69006", label: "6eme" },
+        { value: "69007", label: "7eme" }
+      ]
     };
   }
   async componentDidMount() {
@@ -141,7 +148,7 @@ export default class ListingContainer extends React.Component {
     return (
       <Container className="container-fluid">
         <CtaWrapper>
-          <RefreshButton
+          {/* <RefreshButton
             className="btn btn-success"
             onClick={this.refreshListing}
             disabled={this.state.pendingRefresh}
@@ -154,7 +161,7 @@ export default class ListingContainer extends React.Component {
             disabled={this.state.pendingReset}
           >
             Remettre à zéro le listing
-          </ResetButton>
+          </ResetButton> */}
           <SortListingSelect className="form-group">
             <Select
               value={currentOptionValue}

@@ -1,4 +1,5 @@
 class Api::ListingsController < ApplicationController
+
   def index
     @listings = Listing.where('square_meter_price >= 2800')
       .where(junk: false)
