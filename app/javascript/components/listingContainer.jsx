@@ -30,13 +30,13 @@ const CtaWrapper = styled.div`
 const SortListingSelect = styled.span`
   position: absolute;
   top: 7px;
-  width: 210px;
+  width: 220px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 7px;
-  left: 239px;
+  left: 245px;
 `;
 export default class ListingContainer extends React.Component {
   constructor(props) {
@@ -62,12 +62,14 @@ export default class ListingContainer extends React.Component {
       zipcodeOptions: zipcodeOptions,
       selectedZipcodeOptions: [
         { value: "69001", label: "1er" },
-        { value: "69002", label: "2eme" },
-        { value: "69003", label: "3eme" },
-        { value: "69004", label: "4eme" },
-        { value: "69005", label: "5eme" },
-        { value: "69006", label: "6eme" },
-        { value: "69007", label: "7eme" }
+        { value: "69002", label: "2ème" },
+        { value: "69003", label: "3ème" },
+        { value: "69004", label: "4ème" },
+        { value: "69005", label: "5ème" },
+        { value: "69006", label: "6ème" },
+        { value: "69007", label: "7ème" },
+        { value: "69008", label: "8eme" },
+        { value: "69009", label: "9eme" }
       ]
     };
   }
