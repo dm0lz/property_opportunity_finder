@@ -21,6 +21,7 @@ const TotalCount = styled.span`
   position: absolute;
   top: 7px;
   right: 7px;
+  color: #6f7173 !important;
 `;
 const RefreshButton = styled.button`
   position: absolute;
