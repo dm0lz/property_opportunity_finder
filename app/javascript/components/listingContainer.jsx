@@ -61,8 +61,8 @@ export default class ListingContainer extends React.Component {
       listingsCount: 0,
       pendingRefresh: false,
       pendingReset: false,
-      sortBy: "square_meter_price",
-      sortOrder: "asc",
+      sortBy: "first_publication_date",
+      sortOrder: "desc",
       zipcodeOptions: zipcodeOptions,
       startPrice: 50000,
       endPrice: 190000,
@@ -111,8 +111,8 @@ export default class ListingContainer extends React.Component {
   fetchListing = async pageNb => {
     return await axios.get(
       `/api/listings?page=${pageNb}&sort_by=${this.state.sortBy ||
-        "square_meter_price"}&sort_order=${this.state.sortOrder ||
-        "asc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
+        "first_publication_date"}&sort_order=${this.state.sortOrder ||
+        "desc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
         zipcode => zipcode.value
       )}&start_price=${this.state.startPrice}&end_price=${this.state.endPrice}`
     );
@@ -155,8 +155,8 @@ export default class ListingContainer extends React.Component {
   updateUrl = () => {
     const currentSearch = this.props.history.location.search;
     const url = `?sort_by=${this.state.sortBy ||
-      "square_meter_price"}&sort_order=${this.state.sortOrder ||
-      "asc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
+      "first_publication_date"}&sort_order=${this.state.sortOrder ||
+      "desc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
       zipcode => zipcode.value
     )}&start_price=${this.state.startPrice}&end_price=${this.state.endPrice}`;
 
