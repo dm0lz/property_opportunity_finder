@@ -34,24 +34,31 @@ const ResetButton = styled.button`
   left: 197px;
 `;
 const Container = styled.div`
-  margin-top: 20px;
+  margin-top: 60px;
 `;
-const CtaWrapper = styled.div``;
+const CtaWrapper = styled.div`
+  position: fixed;
+  top: 0px;
+  z-index: 999999;
+  background-color: #699198;
+  width: 100%;
+`;
 const SortListingSelect = styled.span`
   position: absolute;
-  top: 7px;
+  top: 10px;
+  left: 10px;
   width: 220px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
-  top: 7px;
+  top: 10px;
   left: 475px;
 `;
 const RangeSliderWrapper = styled.span`
   position: relative;
-  left: 234px;
-  bottom: 13px;
+  left: 248px;
+  bottom: 0px;
 `;
 export default class ListingContainer extends React.Component {
   constructor(props) {
@@ -170,7 +177,7 @@ export default class ListingContainer extends React.Component {
       el => el.value === `${this.state.sortBy}:${this.state.sortOrder}`
     );
     return (
-      <Container className="container-fluid">
+      <div>
         <CtaWrapper>
           {/* <RefreshButton
             className="btn btn-success"
@@ -213,31 +220,33 @@ export default class ListingContainer extends React.Component {
               options={this.state.zipcodeOptions}
             />
           </ZipcodeSelectionWrapper>
+          <TotalCount className="badge badge-warning">
+            {this.state.listingsCount} Annonces
+          </TotalCount>
         </CtaWrapper>
-        <TotalCount className="badge badge-warning">
-          {this.state.listingsCount} Annonces
-        </TotalCount>
-        {this.state.listings.map((item, index) => (
-          <ListingItem key={index} listing={item}></ListingItem>
-        ))}
-        <nav>
-          {this.state.listings.length > 0 && (
-            <ReactPaginate
-              previousLabel={"previous"}
-              nextLabel={"next"}
-              breakLabel={"..."}
-              breakClassName={"page-item"}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={"pagination"}
-              subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
-          )}
-        </nav>
-      </Container>
+        <Container className="container-fluid">
+          {this.state.listings.map((item, index) => (
+            <ListingItem key={index} listing={item}></ListingItem>
+          ))}
+          <nav>
+            {this.state.listings.length > 0 && (
+              <ReactPaginate
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                breakClassName={"page-item"}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
+            )}
+          </nav>
+        </Container>
+      </div>
     );
   }
 }

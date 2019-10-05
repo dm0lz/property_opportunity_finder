@@ -102,7 +102,7 @@ export default class RangeSlider extends React.Component {
                   borderRadius: "4px",
                   background: getTrackBackground({
                     values: this.state.values,
-                    colors: ["#ccc", "#548BF4", "#ccc"],
+                    colors: ["#ccc", "#ffc124", "#ccc"],
                     min: MIN,
                     max: MAX
                   }),
@@ -132,13 +132,21 @@ export default class RangeSlider extends React.Component {
                 style={{
                   height: "16px",
                   width: "5px",
-                  backgroundColor: isDragged ? "#548BF4" : "#CCC"
+                  backgroundColor: isDragged ? "#ffc124" : "#CCC"
                 }}
               />
             </div>
           )}
         />
-        <output style={{ marginTop: "0px" }} id="output">
+        <output
+          style={{
+            marginTop: "0px",
+            color: "#e4e4e4",
+            position: "relative",
+            bottom: "4px"
+          }}
+          id="output"
+        >
           {this.currencyFormat(this.state.values[0])}€ -{" "}
           {this.currencyFormat(this.state.values[1])}€
         </output>
