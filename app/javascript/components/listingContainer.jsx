@@ -81,7 +81,11 @@ export default class ListingContainer extends React.Component {
   }
   async componentDidMount() {
     const url = new URL(location.href);
-    const zipcodesInUrl = url.searchParams.get("zipcodes").split(",");
+    const zipcodes = url.searchParams.get("zipcodes");
+    const zipcodesInUrl =
+      zipcodes === null
+        ? this.state.zipcodeOptions.map(zip => zip.value)
+        : zipcodes.split(",");
     const currentZipcodes = this.state.zipcodeOptions
       .map(zipcode => {
         if (zipcodesInUrl.includes(zipcode.value)) {
@@ -91,10 +95,11 @@ export default class ListingContainer extends React.Component {
       .filter(z => z);
     this.setState(
       {
-        sortBy: url.searchParams.get("sort_by"),
-        sortOrder: url.searchParams.get("sort_order"),
-        startPrice: url.searchParams.get("start_price"),
-        endPrice: url.searchParams.get("end_price"),
+        sortBy: url.searchParams.get("sort_by") || this.state.sortBy,
+        sortOrder: url.searchParams.get("sort_order") || this.state.sortOrder,
+        startPrice:
+          url.searchParams.get("start_price") || this.state.startPrice,
+        endPrice: url.searchParams.get("end_price") || this.state.endPrice,
         selectedZipcodeOptions: currentZipcodes
       },
       () => this.getListing()
