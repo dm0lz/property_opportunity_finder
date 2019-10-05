@@ -40,6 +40,17 @@ export default class RangeSlider extends React.Component {
   currencyFormat = num => {
     return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
   };
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.state.values[0] !== parseInt(nextProps.startPrice) ||
+      this.state.values[1] !== parseInt(nextProps.endPrice)
+    ) {
+      this.setState({
+        values: [parseInt(nextProps.startPrice), parseInt(nextProps.endPrice)]
+      });
+    }
+  }
+
   render() {
     return (
       <div

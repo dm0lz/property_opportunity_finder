@@ -35,7 +35,7 @@ const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 7px;
-  left: 462px;
+  left: 475px;
 `;
 const RangeSliderWrapper = styled.span`
   position: relative;
@@ -81,10 +81,21 @@ export default class ListingContainer extends React.Component {
   }
   async componentDidMount() {
     const url = new URL(location.href);
+    const zipcodesInUrl = url.searchParams.get("zipcodes").split(",");
+    const currentZipcodes = this.state.zipcodeOptions
+      .map(zipcode => {
+        if (zipcodesInUrl.includes(zipcode.value)) {
+          return zipcode;
+        }
+      })
+      .filter(z => z);
     this.setState(
       {
         sortBy: url.searchParams.get("sort_by"),
-        sortOrder: url.searchParams.get("sort_order")
+        sortOrder: url.searchParams.get("sort_order"),
+        startPrice: url.searchParams.get("start_price"),
+        endPrice: url.searchParams.get("end_price"),
+        selectedZipcodeOptions: currentZipcodes
       },
       () => this.getListing()
     );
