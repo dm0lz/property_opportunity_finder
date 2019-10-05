@@ -117,8 +117,8 @@ export default class RangeSlider extends React.Component {
           )}
         />
         <output style={{ marginTop: "0px" }} id="output">
-          {this.currencyFormat(this.state.values[0])} -{" "}
-          {this.currencyFormat(this.state.values[1])}
+          {this.currencyFormat(this.state.values[0])}€ -{" "}
+          {this.currencyFormat(this.state.values[1])}€
         </output>
       </div>
     );
