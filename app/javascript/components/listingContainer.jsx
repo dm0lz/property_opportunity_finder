@@ -4,6 +4,7 @@ import ListingItem from "components/listingItem";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 import Select from "react-select";
+import RangeSlider from "components/rangeSlider";
 
 const TotalCount = styled.span`
   position: absolute;
@@ -24,9 +25,7 @@ const ResetButton = styled.button`
 const Container = styled.div`
   margin-top: 20px;
 `;
-const CtaWrapper = styled.div`
-  margin-bottom: 50px;
-`;
+const CtaWrapper = styled.div``;
 const SortListingSelect = styled.span`
   position: absolute;
   top: 7px;
@@ -36,7 +35,12 @@ const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 7px;
-  left: 245px;
+  left: 462px;
+`;
+const RangeSliderWrapper = styled.span`
+  position: relative;
+  left: 234px;
+  bottom: 13px;
 `;
 export default class ListingContainer extends React.Component {
   constructor(props) {
@@ -60,6 +64,8 @@ export default class ListingContainer extends React.Component {
       sortBy: "square_meter_price",
       sortOrder: "asc",
       zipcodeOptions: zipcodeOptions,
+      startPrice: 50000,
+      endPrice: 190000,
       selectedZipcodeOptions: [
         { value: "69001", label: "1er" },
         { value: "69002", label: "2ème" },
@@ -96,7 +102,7 @@ export default class ListingContainer extends React.Component {
         "square_meter_price"}&sort_order=${this.state.sortOrder ||
         "asc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
         zipcode => zipcode.value
-      )}`
+      )}&start_price=${this.state.startPrice}&end_price=${this.state.endPrice}`
     );
   };
   refreshListing = async () => {
@@ -125,12 +131,25 @@ export default class ListingContainer extends React.Component {
   sortListing = e => {
     console.log(e);
     const [sortBy, sortOrder] = e.value.split(":");
-    this.setState({ sortBy, sortOrder }, () => this.getListing());
-    const newUrl = `?sort_by=${sortBy}&sort_order=${sortOrder}`;
-    this.props.history.push(newUrl);
+    this.setState({ sortBy, sortOrder }, () => this.updateUrl());
   };
   handleZipcodeChange = e => {
-    this.setState({ selectedZipcodeOptions: e }, () => this.getListing());
+    this.setState({ selectedZipcodeOptions: e }, () => this.updateUrl());
+  };
+  handleRangeChange = values => {
+    const [startPrice, endPrice] = values;
+    this.setState({ startPrice, endPrice }, () => this.updateUrl());
+  };
+  updateUrl = () => {
+    const currentSearch = this.props.history.location.search;
+    const url = `?sort_by=${this.state.sortBy ||
+      "square_meter_price"}&sort_order=${this.state.sortOrder ||
+      "asc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
+      zipcode => zipcode.value
+    )}&start_price=${this.state.startPrice}&end_price=${this.state.endPrice}`;
+
+    this.props.history.push(url);
+    this.getListing();
   };
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
@@ -172,6 +191,13 @@ export default class ListingContainer extends React.Component {
               options={options}
             />
           </SortListingSelect>
+          <RangeSliderWrapper>
+            <RangeSlider
+              onRangeChange={this.handleRangeChange}
+              startPrice={this.state.startPrice}
+              endPrice={this.state.endPrice}
+            />
+          </RangeSliderWrapper>
           <ZipcodeSelectionWrapper>
             <Select
               className="zipcode-select"

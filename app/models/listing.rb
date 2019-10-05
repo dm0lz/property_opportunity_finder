@@ -8,7 +8,7 @@ class Listing < ApplicationRecord
     self.square_meter_price = (price / surface).round
   end
   def check_junk
-    %w(senior étudiante SENIOR ETUDIANTE etudiante).each do |keyword|
+    %w(senior étudiante SENIOR ETUDIANTE etudiante EHPAD).each do |keyword|
       self.junk = true if self.body.include?(keyword) || self.subject.include?(keyword)
     end
   end
