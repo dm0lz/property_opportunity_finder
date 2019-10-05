@@ -41,15 +41,26 @@ export default class RangeSlider extends React.Component {
     return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
   };
 
-  static getDerivedStateFromProps(props, state) {
+  componentWillReceiveProps(nextProps) {
     if (
-      state.values[0] !== parseInt(props.startPrice) ||
-      state.values[1] !== parseInt(props.endPrice)
+      this.state.values[0] !== parseInt(nextProps.startPrice) ||
+      this.state.values[1] !== parseInt(nextProps.endPrice)
     ) {
-      return { values: [parseInt(props.startPrice), parseInt(props.endPrice)] };
+      this.setState({
+        values: [parseInt(nextProps.startPrice), parseInt(nextProps.endPrice)]
+      });
     }
-    return null;
   }
+
+  //   static getDerivedStateFromProps(props, state) {
+  //     if (
+  //       state.values[0] !== parseInt(props.startPrice) ||
+  //       state.values[1] !== parseInt(props.endPrice)
+  //     ) {
+  //       return { values: [parseInt(props.startPrice), parseInt(props.endPrice)] };
+  //     }
+  //     return null;
+  //   }
 
   render() {
     return (
