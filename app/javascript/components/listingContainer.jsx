@@ -49,18 +49,18 @@ const CtaWrapper = styled.div`
 const SortListingSelect = styled.span`
   position: absolute;
   top: 10px;
-  left: 10px;
+  right: 110px;
   width: 220px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 11px;
-  left: 248px;
+  left: 25px;
 `;
 const RangeSliderWrapper = styled.span`
   position: relative;
-  left: 485px;
+  left: 285px;
   bottom: 0px;
 `;
 export default class ListingContainer extends React.Component {
@@ -197,14 +197,7 @@ export default class ListingContainer extends React.Component {
           >
             Remettre à zéro le listing
           </ResetButton> */}
-          <SortListingSelect className="form-group">
-            <Select
-              value={currentOptionValue}
-              onChange={this.sortListing}
-              isMulti={false}
-              options={options}
-            />
-          </SortListingSelect>
+
           <ZipcodeSelectionWrapper>
             {/* <Select
               className="zipcode-select"
@@ -238,6 +231,14 @@ export default class ListingContainer extends React.Component {
           <TotalCount className="badge badge-warning">
             {this.state.listingsCount} Annonces
           </TotalCount>
+          <SortListingSelect className="form-group">
+            <Select
+              value={currentOptionValue}
+              onChange={this.sortListing}
+              isMulti={false}
+              options={options}
+            />
+          </SortListingSelect>
         </CtaWrapper>
         <Container className="container-fluid">
           {this.state.listings.map((item, index) => (
