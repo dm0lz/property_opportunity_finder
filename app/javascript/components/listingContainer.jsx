@@ -4,6 +4,8 @@ import ListingItem from "components/listingItem";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 import Select from "react-select";
+import MultiSelect from "@khanacademy/react-multi-select";
+
 import RangeSlider from "components/rangeSlider";
 
 const ZIPCODE_OPTIONS = [
@@ -53,12 +55,12 @@ const SortListingSelect = styled.span`
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
-  top: 10px;
-  left: 475px;
+  top: 11px;
+  left: 248px;
 `;
 const RangeSliderWrapper = styled.span`
   position: relative;
-  left: 248px;
+  left: 485px;
   bottom: 0px;
 `;
 export default class ListingContainer extends React.Component {
@@ -85,9 +87,10 @@ export default class ListingContainer extends React.Component {
       zipcodes === null
         ? this.state.zipcodeOptions.map(zip => zip.value)
         : zipcodes.split(",");
-    const currentZipcodes = this.state.zipcodeOptions.filter(zipcode =>
-      zipcodesInUrl.includes(zipcode.value)
-    );
+    // const currentZipcodes = this.state.zipcodeOptions.filter(zipcode =>
+    //   zipcodesInUrl.includes(zipcode.value)
+    // );
+    const currentZipcodes = zipcodesInUrl;
     this.setState(
       {
         sortBy: url.searchParams.get("sort_by") || this.state.sortBy,
@@ -111,9 +114,9 @@ export default class ListingContainer extends React.Component {
     return await axios.get(
       `/api/listings?page=${pageNb}&sort_by=${this.state.sortBy ||
         "first_publication_date"}&sort_order=${this.state.sortOrder ||
-        "desc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
-        zipcode => zipcode.value
-      )}&start_price=${this.state.startPrice}&end_price=${this.state.endPrice}`
+        "desc"}&zipcodes=${this.state.selectedZipcodeOptions}&start_price=${
+        this.state.startPrice
+      }&end_price=${this.state.endPrice}`
     );
   };
   refreshListing = async () => {
@@ -155,9 +158,9 @@ export default class ListingContainer extends React.Component {
     const currentSearch = this.props.history.location.search;
     const url = `?sort_by=${this.state.sortBy ||
       "first_publication_date"}&sort_order=${this.state.sortOrder ||
-      "desc"}&zipcodes=${this.state.selectedZipcodeOptions.map(
-      zipcode => zipcode.value
-    )}&start_price=${this.state.startPrice}&end_price=${this.state.endPrice}`;
+      "desc"}&zipcodes=${this.state.selectedZipcodeOptions}&start_price=${
+      this.state.startPrice
+    }&end_price=${this.state.endPrice}`;
 
     this.props.history.push(url);
     this.getListing();
@@ -202,15 +205,8 @@ export default class ListingContainer extends React.Component {
               options={options}
             />
           </SortListingSelect>
-          <RangeSliderWrapper>
-            <RangeSlider
-              onRangeChange={this.handleRangeChange}
-              startPrice={this.state.startPrice}
-              endPrice={this.state.endPrice}
-            />
-          </RangeSliderWrapper>
           <ZipcodeSelectionWrapper>
-            <Select
+            {/* <Select
               className="zipcode-select"
               style={{
                 width: "150px"
@@ -219,8 +215,26 @@ export default class ListingContainer extends React.Component {
               onChange={this.handleZipcodeChange}
               isMulti={true}
               options={this.state.zipcodeOptions}
+            /> */}
+            <MultiSelect
+              options={this.state.zipcodeOptions}
+              selected={this.state.selectedZipcodeOptions}
+              onSelectedChanged={this.handleZipcodeChange}
+              overrideStrings={{
+                selectSomeItems: "Select Some items...",
+                allItemsAreSelected: "Tous les codes postaux",
+                selectAll: "Tous",
+                search: "Chercher"
+              }}
             />
           </ZipcodeSelectionWrapper>
+          <RangeSliderWrapper>
+            <RangeSlider
+              onRangeChange={this.handleRangeChange}
+              startPrice={this.state.startPrice}
+              endPrice={this.state.endPrice}
+            />
+          </RangeSliderWrapper>
           <TotalCount className="badge badge-warning">
             {this.state.listingsCount} Annonces
           </TotalCount>
