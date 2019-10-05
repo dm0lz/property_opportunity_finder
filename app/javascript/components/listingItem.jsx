@@ -6,7 +6,7 @@ import "moment/locale/fr";
 
 const ItemContainer = styled.section`
   border-bottom: 1px dotted #cec7c7;
-  background-color: ${props => (props.isNew ? "#ffffe1" : "white")};
+  background-color: ${props => (props.isNew ? "#ffffeb" : "white")};
 `;
 const PictureContainer = styled.span`
   position: relative;
@@ -22,7 +22,7 @@ const SquareMeterPrice = styled.span`
 `;
 const Picture = styled.img`
   height: 145px;
-  border-radius: 5px;
+  border-radius: 3px;
 `;
 const RightCorner = styled.div`
   text-align: right;
