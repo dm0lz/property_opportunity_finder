@@ -6,6 +6,17 @@ import styled from "styled-components";
 import Select from "react-select";
 import RangeSlider from "components/rangeSlider";
 
+const ZIPCODE_OPTIONS = [
+  { value: "69001", label: "69001" },
+  { value: "69002", label: "69002" },
+  { value: "69003", label: "69003" },
+  { value: "69004", label: "69004" },
+  { value: "69005", label: "69005" },
+  { value: "69006", label: "69006" },
+  { value: "69007", label: "69007" },
+  { value: "69008", label: "69008" },
+  { value: "69009", label: "69009" }
+];
 const TotalCount = styled.span`
   position: absolute;
   top: 7px;
@@ -45,17 +56,7 @@ const RangeSliderWrapper = styled.span`
 export default class ListingContainer extends React.Component {
   constructor(props) {
     super(props);
-    const zipcodeOptions = [
-      { value: "69001", label: "1er" },
-      { value: "69002", label: "2ème" },
-      { value: "69003", label: "3ème" },
-      { value: "69004", label: "4ème" },
-      { value: "69005", label: "5ème" },
-      { value: "69006", label: "6ème" },
-      { value: "69007", label: "7ème" },
-      { value: "69008", label: "8ème" },
-      { value: "69009", label: "9ème" }
-    ];
+    const zipcodeOptions = ZIPCODE_OPTIONS;
     this.state = {
       listings: [],
       listingsCount: 0,
@@ -66,17 +67,7 @@ export default class ListingContainer extends React.Component {
       zipcodeOptions: zipcodeOptions,
       startPrice: 50000,
       endPrice: 190000,
-      selectedZipcodeOptions: [
-        { value: "69001", label: "1er" },
-        { value: "69002", label: "2ème" },
-        { value: "69003", label: "3ème" },
-        { value: "69004", label: "4ème" },
-        { value: "69005", label: "5ème" },
-        { value: "69006", label: "6ème" },
-        { value: "69007", label: "7ème" },
-        { value: "69008", label: "8ème" },
-        { value: "69009", label: "9ème" }
-      ]
+      selectedZipcodeOptions: ZIPCODE_OPTIONS
     };
   }
   async componentDidMount() {
@@ -166,14 +157,14 @@ export default class ListingContainer extends React.Component {
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
-      { label: "prix au m2 ascendant", value: "square_meter_price:asc" },
-      { label: "prix au m2 descendant", value: "square_meter_price:desc" },
-      { label: "prix ascendant", value: "price:asc" },
-      { label: "prix descendant", value: "price:desc" },
-      { label: "surface ascendante", value: "surface:asc" },
-      { label: "surface descendante", value: "surface:desc" },
-      { label: "date ascendante", value: "first_publication_date:asc" },
-      { label: "date descendante", value: "first_publication_date:desc" }
+      { label: "prix au m2 croissant", value: "square_meter_price:asc" },
+      { label: "prix au m2 décroissant", value: "square_meter_price:desc" },
+      { label: "prix croissant", value: "price:asc" },
+      { label: "prix décroissant", value: "price:desc" },
+      { label: "surface croissante", value: "surface:asc" },
+      { label: "surface décroissante", value: "surface:desc" },
+      { label: "date croissante", value: "first_publication_date:asc" },
+      { label: "date décroissante", value: "first_publication_date:desc" }
     ];
     const currentOptionValue = options.find(
       el => el.value === `${this.state.sortBy}:${this.state.sortOrder}`

@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import moment from "moment";
+import "moment/locale/fr";
 
 const ItemContainer = styled.section`
-  //height: 180px;
-  //display: inline-flex;
   border-bottom: 1px dotted #cec7c7;
   background-color: ${props => (props.isNew ? "#ffffe1" : "white")};
 `;
@@ -13,7 +12,6 @@ const PictureContainer = styled.span`
   position: relative;
   bottom: 20px;
   padding: 30px 50px 0px 50px;
-  //max-width: 150px;
 `;
 const InfoContainer = styled.span``;
 const Price = styled.span`
@@ -56,6 +54,7 @@ export default class ListingItem extends React.Component {
       slidesToScroll: 1,
       lazyLoad: true
     };
+    moment.locale("fr");
     return (
       <ItemContainer className="row" isNew={this.props.listing.is_new}>
         <PictureContainer className="col-sm-2">
@@ -97,9 +96,7 @@ export default class ListingItem extends React.Component {
               {this.props.listing.external_provider.toUpperCase()}
             </span>{" "}
             <span className="badge badge-primary">
-              {moment(this.props.listing.first_publication_date).format(
-                "DD MMM"
-              )}
+              {moment(this.props.listing.first_publication_date).format("lll")}
             </span>{" "}
             {/* <span className="badge badge-primary">
               {" "}
