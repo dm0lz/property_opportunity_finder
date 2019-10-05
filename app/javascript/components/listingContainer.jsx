@@ -43,14 +43,14 @@ export default class ListingContainer extends React.Component {
     super(props);
     const zipcodeOptions = [
       { value: "69001", label: "1er" },
-      { value: "69002", label: "2eme" },
-      { value: "69003", label: "3eme" },
-      { value: "69004", label: "4eme" },
-      { value: "69005", label: "5eme" },
-      { value: "69006", label: "6eme" },
-      { value: "69007", label: "7eme" },
-      { value: "69008", label: "8eme" },
-      { value: "69009", label: "9eme" }
+      { value: "69002", label: "2ème" },
+      { value: "69003", label: "3ème" },
+      { value: "69004", label: "4ème" },
+      { value: "69005", label: "5ème" },
+      { value: "69006", label: "6ème" },
+      { value: "69007", label: "7ème" },
+      { value: "69008", label: "8ème" },
+      { value: "69009", label: "9ème" }
     ];
     this.state = {
       listings: [],
@@ -68,8 +68,8 @@ export default class ListingContainer extends React.Component {
         { value: "69005", label: "5ème" },
         { value: "69006", label: "6ème" },
         { value: "69007", label: "7ème" },
-        { value: "69008", label: "8eme" },
-        { value: "69009", label: "9eme" }
+        { value: "69008", label: "8ème" },
+        { value: "69009", label: "9ème" }
       ]
     };
   }
