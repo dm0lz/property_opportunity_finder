@@ -86,13 +86,9 @@ export default class ListingContainer extends React.Component {
       zipcodes === null
         ? this.state.zipcodeOptions.map(zip => zip.value)
         : zipcodes.split(",");
-    const currentZipcodes = this.state.zipcodeOptions
-      .map(zipcode => {
-        if (zipcodesInUrl.includes(zipcode.value)) {
-          return zipcode;
-        }
-      })
-      .filter(z => z);
+    const currentZipcodes = this.state.zipcodeOptions.filter(zipcode =>
+      zipcodesInUrl.includes(zipcode.value)
+    );
     this.setState(
       {
         sortBy: url.searchParams.get("sort_by") || this.state.sortBy,
