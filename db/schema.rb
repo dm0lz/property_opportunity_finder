@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_161507) do
+ActiveRecord::Schema.define(version: 2019_10_06_170818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "insee_locations", force: :cascade do |t|
+    t.string "insee_code"
+    t.integer "postal_code"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "listings", force: :cascade do |t|
     t.integer "external_id"
@@ -36,6 +44,13 @@ ActiveRecord::Schema.define(version: 2019_09_12_161507) do
     t.string "real_estate_type"
     t.boolean "junk", default: false
     t.jsonb "original_payload"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "city_name"
+    t.text "zipcodes", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

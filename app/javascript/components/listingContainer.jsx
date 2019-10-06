@@ -4,9 +4,11 @@ import ListingItem from "components/listingItem";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import MultiSelect from "@khanacademy/react-multi-select";
 
 import RangeSlider from "components/rangeSlider";
+import moment from "moment";
 
 const ZIPCODE_OPTIONS = [
   { value: "69001", label: "69001" },
@@ -22,6 +24,12 @@ const ZIPCODE_OPTIONS = [
 const TotalCount = styled.span`
   position: absolute;
   top: 7px;
+  right: 7px;
+  color: #6f7173 !important;
+`;
+const CurrentDay = styled.span`
+  position: absolute;
+  top: 33px;
   right: 7px;
   color: #6f7173 !important;
 `;
@@ -56,13 +64,31 @@ const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 11px;
-  left: 25px;
+  left: 250px;
 `;
 const RangeSliderWrapper = styled.span`
   position: relative;
-  left: 285px;
+  left: 490px;
   bottom: 0px;
 `;
+
+const CitySelectionWrapper = styled.span`
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 220px;
+`;
+const fetchCities = inputValue => {
+  // return colourOptions.filter(i =>
+  //   i.label.toLowerCase().includes(inputValue.toLowerCase())
+  // );
+};
+const loadOptions = (inputValue, callback) => {
+  console.log(inputValue);
+  setTimeout(() => {
+    callback(fetchCities(inputValue));
+  }, 1000);
+};
 export default class ListingContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -165,6 +191,9 @@ export default class ListingContainer extends React.Component {
     this.props.history.push(url);
     this.getListing();
   };
+  handleCityInputChange = e => {
+    //console.log(e);
+  };
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
@@ -197,6 +226,14 @@ export default class ListingContainer extends React.Component {
           >
             Remettre à zéro le listing
           </ResetButton> */}
+          <CitySelectionWrapper>
+            <AsyncSelect
+              cacheOptions
+              loadOptions={loadOptions}
+              defaultOptions
+              onInputChange={this.handleCityInputChange}
+            />
+          </CitySelectionWrapper>
 
           <ZipcodeSelectionWrapper>
             {/* <Select
@@ -231,6 +268,9 @@ export default class ListingContainer extends React.Component {
           <TotalCount className="badge badge-warning">
             {this.state.listingsCount} Annonces
           </TotalCount>
+          <CurrentDay className="badge badge-warning">
+            {moment(new Date()).format("ll")}
+          </CurrentDay>
           <SortListingSelect className="form-group">
             <Select
               value={currentOptionValue}
