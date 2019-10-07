@@ -18,7 +18,7 @@ class Persister::Leboncoin::Properties
         body: property['body'],
         ad_type: property['ad_type'],
         url: property['url'],
-        price: property['price'].first,
+        price: property['price'].first rescue 0,
         surface: retrieve_surface(property),
         postal_code: property["location"]["zipcode"],
         pictures: property["images"]["urls_thumb"],

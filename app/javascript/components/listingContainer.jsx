@@ -99,9 +99,20 @@ export default class ListingContainer extends React.Component {
   async componentDidMount() {
     const url = new URL(location.href);
     const zipcodes = url.searchParams.get("zipcodes");
+    const cityParam = url.searchParams.get("city");
     const zipcodesInUrl = zipcodes === null ? [] : zipcodes.split(",");
-    const res = await axios.get(`/api/cities?city_name=${this.state.city}`);
-    const city = res.data.results[res.data.results.length - 1];
+    const res = await axios.get(
+      `/api/cities?city_name=${cityParam || this.state.city}`
+    );
+    // todo: select the city properly
+    // const city = res.data.results[res.data.results.length - 1];
+    let city = res.data.results.map(city => {
+      if (city.value === cityParam.toUpperCase()) {
+        return city;
+      }
+    });
+    city = city.filter(city => city);
+    city = city[0];
     this.setState(
       {
         sortBy: url.searchParams.get("sort_by") || this.state.sortBy,
@@ -172,8 +183,8 @@ export default class ListingContainer extends React.Component {
   };
   updateUrl = () => {
     const currentSearch = this.props.history.location.search;
-    const url = `?sort_by=${this.state.sortBy ||
-      "first_publication_date"}&sort_order=${this.state.sortOrder ||
+    const url = `?city=${this.state.city.toUpperCase()}&sort_by=${this.state
+      .sortBy || "first_publication_date"}&sort_order=${this.state.sortOrder ||
       "desc"}&zipcodes=${this.state.selectedZipcodeOptions}&start_price=${
       this.state.startPrice
     }&end_price=${this.state.endPrice}`;
@@ -196,8 +207,9 @@ export default class ListingContainer extends React.Component {
     const zipcodeOptions = e.zipcodes.map(zip => {
       return { value: zip, label: zip };
     });
-    this.setState({ selectedZipcodeOptions: e.zipcodes, zipcodeOptions }, () =>
-      this.updateUrl()
+    this.setState(
+      { selectedZipcodeOptions: e.zipcodes, zipcodeOptions, city: e.value },
+      () => this.updateUrl()
     );
   };
   render() {

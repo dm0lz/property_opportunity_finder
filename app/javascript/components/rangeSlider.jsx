@@ -32,7 +32,7 @@ export function getTrackBackground({
 
 const STEP = 5000;
 const MIN = 0;
-const MAX = 400000;
+const MAX = 500000;
 export default class RangeSlider extends React.Component {
   state = {
     values: [this.props.startPrice, this.props.endPrice]
