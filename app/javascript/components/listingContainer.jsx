@@ -58,17 +58,17 @@ const SortListingSelect = styled.span`
   position: absolute;
   top: 10px;
   right: 110px;
-  width: 220px;
+  width: 210px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 11px;
-  left: 250px;
+  left: 225px;
 `;
 const RangeSliderWrapper = styled.span`
   position: relative;
-  left: 490px;
+  left: 450px;
   bottom: 0px;
 `;
 
@@ -76,7 +76,7 @@ const CitySelectionWrapper = styled.span`
   position: absolute;
   top: 10px;
   left: 14px;
-  width: 220px;
+  width: 200px;
 `;
 
 export default class ListingContainer extends React.Component {
