@@ -227,6 +227,9 @@ export default class ListingContainer extends React.Component {
     const currentOptionValue = options.find(
       el => el.value === `${this.state.sortBy}:${this.state.sortOrder}`
     );
+    const zipcodeOptions = this.state.zipcodeOptions.sort(
+      (a, b) => a.value - b.value
+    );
     return (
       <div>
         <CtaWrapper>
@@ -268,7 +271,7 @@ export default class ListingContainer extends React.Component {
               options={this.state.zipcodeOptions}
             /> */}
             <MultiSelect
-              options={this.state.zipcodeOptions}
+              options={zipcodeOptions}
               selected={this.state.selectedZipcodeOptions}
               onSelectedChanged={this.handleZipcodeChange}
               overrideStrings={{
