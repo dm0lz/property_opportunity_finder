@@ -78,21 +78,10 @@ const CitySelectionWrapper = styled.span`
   left: 14px;
   width: 220px;
 `;
-const fetchCities = inputValue => {
-  // return colourOptions.filter(i =>
-  //   i.label.toLowerCase().includes(inputValue.toLowerCase())
-  // );
-};
-const loadOptions = (inputValue, callback) => {
-  console.log(inputValue);
-  setTimeout(() => {
-    callback(fetchCities(inputValue));
-  }, 1000);
-};
+
 export default class ListingContainer extends React.Component {
   constructor(props) {
     super(props);
-    const zipcodeOptions = ZIPCODE_OPTIONS;
     this.state = {
       listings: [],
       listingsCount: 0,
@@ -100,23 +89,19 @@ export default class ListingContainer extends React.Component {
       pendingReset: false,
       sortBy: "first_publication_date",
       sortOrder: "desc",
-      zipcodeOptions: zipcodeOptions,
+      zipcodeOptions: [],
       startPrice: 50000,
       endPrice: 190000,
-      selectedZipcodeOptions: ZIPCODE_OPTIONS
+      selectedZipcodeOptions: [],
+      city: "lyon"
     };
   }
   async componentDidMount() {
     const url = new URL(location.href);
     const zipcodes = url.searchParams.get("zipcodes");
-    const zipcodesInUrl =
-      zipcodes === null
-        ? this.state.zipcodeOptions.map(zip => zip.value)
-        : zipcodes.split(",");
-    // const currentZipcodes = this.state.zipcodeOptions.filter(zipcode =>
-    //   zipcodesInUrl.includes(zipcode.value)
-    // );
-    const currentZipcodes = zipcodesInUrl;
+    const zipcodesInUrl = zipcodes === null ? [] : zipcodes.split(",");
+    const res = await axios.get(`/api/cities?city_name=${this.state.city}`);
+    const city = res.data.results[res.data.results.length - 1];
     this.setState(
       {
         sortBy: url.searchParams.get("sort_by") || this.state.sortBy,
@@ -124,7 +109,12 @@ export default class ListingContainer extends React.Component {
         startPrice:
           url.searchParams.get("start_price") || this.state.startPrice,
         endPrice: url.searchParams.get("end_price") || this.state.endPrice,
-        selectedZipcodeOptions: currentZipcodes
+        selectedZipcodeOptions: zipcodesInUrl.length
+          ? zipcodesInUrl
+          : city.zipcodes,
+        zipcodeOptions: city.zipcodes.map(zip => {
+          return { value: zip, label: zip };
+        })
       },
       () => this.getListing()
     );
@@ -194,6 +184,22 @@ export default class ListingContainer extends React.Component {
   handleCityInputChange = e => {
     //console.log(e);
   };
+  async getOptions(inputValue) {
+    if (!inputValue || inputValue.length <= 2) {
+      return [];
+    }
+    const response = await fetch(`/api/cities?city_name=${inputValue}`);
+    const json = await response.json();
+    return json.results;
+  }
+  handleCitySelected = e => {
+    const zipcodeOptions = e.zipcodes.map(zip => {
+      return { value: zip, label: zip };
+    });
+    this.setState({ selectedZipcodeOptions: e.zipcodes, zipcodeOptions }, () =>
+      this.updateUrl()
+    );
+  };
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
@@ -229,9 +235,12 @@ export default class ListingContainer extends React.Component {
           <CitySelectionWrapper>
             <AsyncSelect
               cacheOptions
-              loadOptions={loadOptions}
+              loadOptions={this.getOptions}
               defaultOptions
               onInputChange={this.handleCityInputChange}
+              onChange={this.handleCitySelected}
+              placeholder="Chercher une Ville"
+              noOptionsMessage={() => "Pas de résultat"}
             />
           </CitySelectionWrapper>
 

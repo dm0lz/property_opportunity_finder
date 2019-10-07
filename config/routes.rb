@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       end
     end
     resource :lbc_puppeter, only: :create
+    resources :cities, only: :index
   end
   get "*path", to: "home#index"
 end
