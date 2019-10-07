@@ -99,7 +99,7 @@ export default class ListingContainer extends React.Component {
   async componentDidMount() {
     const url = new URL(location.href);
     const zipcodes = url.searchParams.get("zipcodes");
-    const cityParam = url.searchParams.get("city");
+    const cityParam = url.searchParams.get("city") || this.state.city;
     const zipcodesInUrl = zipcodes === null ? [] : zipcodes.split(",");
     const res = await axios.get(
       `/api/cities?city_name=${cityParam || this.state.city}`
