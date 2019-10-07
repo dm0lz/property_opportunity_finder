@@ -18,7 +18,7 @@ class Persister::Leboncoin::Properties
         body: property['body'],
         ad_type: property['ad_type'],
         url: property['url'],
-        price: property['price'].first rescue 0,
+        price: retrieve_price(property),
         surface: retrieve_surface(property),
         postal_code: property["location"]["zipcode"],
         pictures: property["images"]["urls_thumb"],
@@ -32,6 +32,10 @@ class Persister::Leboncoin::Properties
     # rescue => e
     #   puts e
     # end
+  end
+
+  def retrieve_price(property)
+    property['price'].first rescue 0
   end
 
   def retrieve_real_estate_type(property)
