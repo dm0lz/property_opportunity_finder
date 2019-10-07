@@ -196,7 +196,7 @@ export default class ListingContainer extends React.Component {
     //console.log(e);
   };
   async getOptions(inputValue) {
-    if (!inputValue || inputValue.length <= 2) {
+    if (!inputValue || inputValue.length <= 1) {
       return [];
     }
     const response = await fetch(`/api/cities?city_name=${inputValue}`);
