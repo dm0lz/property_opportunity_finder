@@ -1,8 +1,4 @@
 class LocationStat < ApplicationRecord
-  def get_avg
-    listings = Listing.where(postal_code: postal_code, junk: false)
-    listings.sum(:square_meter_price) / listings.count
-  end
 end
 
 # (69001..69009).to_a.each do |zip|
