@@ -92,6 +92,10 @@ export default class ListingItem extends React.Component {
               {" "}
               {this.props.listing.postal_code}{" "}
             </span>{" "}
+            <span className="badge badge-success">
+              {" "}
+              {this.props.listing.avg_square_meter_price} €/m2{" "}
+            </span>{" "}
             <span className="badge badge-warning">
               {this.props.listing.external_provider.toUpperCase()}
             </span>{" "}

@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  postal_code: MyString
+  average_square_meter_price: 1
+
+two:
+  postal_code: MyString
+  average_square_meter_price: 1
