@@ -85,16 +85,13 @@ export default class ListingItem extends React.Component {
               {" "}
               {this.currencyFormat(this.props.listing.price)} €
             </span>{" "}
-            <span className="badge badge-info">
+            <span className="badge badge-secondary">
               {this.props.listing.surface}m2
             </span>{" "}
-            <span className="badge badge-secondary">
+            <span className="badge badge-info">
               {" "}
-              {this.props.listing.postal_code}{" "}
-            </span>{" "}
-            <span className="badge badge-success">
-              {" "}
-              ~ {this.props.listing.avg_square_meter_price} €/m2{" "}
+              {this.props.listing.postal_code} ~{" "}
+              {this.props.listing.avg_square_meter_price} €/m2{" "}
             </span>{" "}
             <span className="badge badge-warning">
               {this.props.listing.external_provider.toUpperCase()}
