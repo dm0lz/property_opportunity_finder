@@ -43,6 +43,9 @@ export default class ListingItem extends React.Component {
   currencyFormat = num => {
     return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
   };
+  isOpportunity = listing => {
+    return listing.square_meter_price < listing.avg_square_meter_price;
+  };
   render() {
     var settings = {
       dots: true,
@@ -99,6 +102,9 @@ export default class ListingItem extends React.Component {
             <span className="badge badge-primary">
               {moment(this.props.listing.first_publication_date).format("lll")}
             </span>{" "}
+            {this.isOpportunity(this.props.listing) && (
+              <span className="badge badge-success">Opportunité</span>
+            )}
             {/* <span className="badge badge-primary">
               {" "}
               {this.props.listing.id}{" "}
