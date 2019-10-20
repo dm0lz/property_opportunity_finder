@@ -334,6 +334,7 @@ export default class ListingContainer extends React.Component {
                   onRangeChange={this.handlePriceRangeChange}
                   startPrice={this.state.startPrice}
                   endPrice={this.state.endPrice}
+                  allowOverlap={true}
                 />
               </PricePicker>
             )}
