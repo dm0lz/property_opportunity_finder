@@ -50,9 +50,11 @@ const Container = styled.div`
 const CtaWrapper = styled.div`
   position: fixed;
   top: 0px;
+  height: 60px;
   z-index: 999999;
   background-color: #699198;
   width: 100%;
+  display: inline-flex;
 `;
 const SortListingSelect = styled.span`
   position: absolute;
@@ -64,19 +66,51 @@ const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 11px;
-  left: 225px;
+  left: 145px;
 `;
-const RangeSliderWrapper = styled.span`
+const PriceSliderWrapper = styled.span`
   position: relative;
-  left: 450px;
+  left: 277px;
   bottom: 0px;
+  top: 11px;
 `;
-
+const SurfaceButtonWrapper = styled.span`
+  position: relative;
+  left: 290px;
+  top: 11px;
+`;
+const SurfaceButton = styled.button`
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+`;
+const PriceButton = styled.button`
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+`;
+const PricePicker = styled.div`
+  margin-top: 11px;
+  width: 220px;
+  position: fixed;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #cacaca;
+  border-radius: 3px;
+  transform: translate(-69px, 1px);
+`;
+const SurfacePicker = styled.div`
+  margin-top: 11px;
+  width: 220px;
+  position: fixed;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #cacaca;
+  border-radius: 3px;
+`;
 const CitySelectionWrapper = styled.span`
   position: absolute;
   top: 10px;
   left: 14px;
-  width: 200px;
+  width: 120px;
 `;
 
 export default class ListingContainer extends React.Component {
@@ -93,7 +127,9 @@ export default class ListingContainer extends React.Component {
       startPrice: 50000,
       endPrice: 190000,
       selectedZipcodeOptions: [],
-      city: "lyon"
+      city: "lyon",
+      showSurfacePicker: false,
+      showPricePicker: false
     };
   }
   async componentDidMount() {
@@ -177,7 +213,7 @@ export default class ListingContainer extends React.Component {
   handleZipcodeChange = e => {
     this.setState({ selectedZipcodeOptions: e }, () => this.updateUrl());
   };
-  handleRangeChange = values => {
+  handlePriceRangeChange = values => {
     const [startPrice, endPrice] = values;
     this.setState({ startPrice, endPrice }, () => this.updateUrl());
   };
@@ -254,8 +290,8 @@ export default class ListingContainer extends React.Component {
               defaultOptions
               onInputChange={this.handleCityInputChange}
               onChange={this.handleCitySelected}
-              placeholder="Chercher une Ville"
-              noOptionsMessage={() => "Pas de résultat"}
+              placeholder="Ville"
+              noOptionsMessage={() => "0 résultat"}
             />
           </CitySelectionWrapper>
 
@@ -276,19 +312,44 @@ export default class ListingContainer extends React.Component {
               onSelectedChanged={this.handleZipcodeChange}
               overrideStrings={{
                 selectSomeItems: "Select Some items...",
-                allItemsAreSelected: "Tous les codes postaux",
+                allItemsAreSelected: "Zipcodes",
                 selectAll: "Tous",
                 search: "Chercher"
               }}
             />
           </ZipcodeSelectionWrapper>
-          <RangeSliderWrapper>
-            <RangeSlider
-              onRangeChange={this.handleRangeChange}
-              startPrice={this.state.startPrice}
-              endPrice={this.state.endPrice}
-            />
-          </RangeSliderWrapper>
+          <PriceSliderWrapper>
+            <PriceButton
+              onClick={() =>
+                this.setState({
+                  showPricePicker: !this.state.showPricePicker
+                })
+              }
+            >
+              Prix
+            </PriceButton>
+            {this.state.showPricePicker && (
+              <PricePicker>
+                <RangeSlider
+                  onRangeChange={this.handlePriceRangeChange}
+                  startPrice={this.state.startPrice}
+                  endPrice={this.state.endPrice}
+                />
+              </PricePicker>
+            )}
+          </PriceSliderWrapper>
+          <SurfaceButtonWrapper>
+            <SurfaceButton
+              onClick={() =>
+                this.setState({
+                  showSurfacePicker: !this.state.showSurfacePicker
+                })
+              }
+            >
+              Surface
+            </SurfaceButton>
+            {this.state.showSurfacePicker && <SurfacePicker>tt</SurfacePicker>}
+          </SurfaceButtonWrapper>
           <TotalCount className="badge badge-warning">
             {this.state.listingsCount} Annonces
           </TotalCount>
