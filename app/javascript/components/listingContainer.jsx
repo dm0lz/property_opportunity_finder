@@ -59,8 +59,8 @@ const CtaWrapper = styled.div`
 const SortListingSelect = styled.span`
   position: absolute;
   top: 10px;
-  right: 110px;
-  width: 210px;
+  right: 120px;
+  width: 125px;
 `;
 const ZipcodeSelectionWrapper = styled.span`
   display: inline-flex;
@@ -288,14 +288,14 @@ export default class ListingContainer extends React.Component {
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
-      { label: "prix au m2 croissant", value: "square_meter_price:asc" },
-      { label: "prix au m2 décroissant", value: "square_meter_price:desc" },
-      { label: "prix croissant", value: "price:asc" },
-      { label: "prix décroissant", value: "price:desc" },
-      { label: "surface croissante", value: "surface:asc" },
-      { label: "surface décroissante", value: "surface:desc" },
-      { label: "date croissante", value: "first_publication_date:asc" },
-      { label: "date décroissante", value: "first_publication_date:desc" }
+      { label: "prix/m2 ↑", value: "square_meter_price:asc" },
+      { label: "prix/m2 ↓", value: "square_meter_price:desc" },
+      { label: "prix ↑", value: "price:asc" },
+      { label: "prix ↓", value: "price:desc" },
+      { label: "surface ↑", value: "surface:asc" },
+      { label: "surface ↓", value: "surface:desc" },
+      { label: "date ↑", value: "first_publication_date:asc" },
+      { label: "date ↓", value: "first_publication_date:desc" }
     ];
     const currentOptionValue = options.find(
       el => el.value === `${this.state.sortBy}:${this.state.sortOrder}`
