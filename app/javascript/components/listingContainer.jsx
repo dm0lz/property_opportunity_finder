@@ -72,17 +72,17 @@ const ProviderSelectWrapper = styled.span`
   display: inline-flex;
   position: absolute;
   top: 11px;
-  left: 430px;
+  left: 409px;
 `;
 const PriceSliderWrapper = styled.span`
   position: relative;
-  left: 277px;
+  left: 260px;
   bottom: 0px;
   top: 11px;
 `;
 const SurfaceButtonWrapper = styled.span`
   position: relative;
-  left: 290px;
+  left: 270px;
   top: 11px;
 `;
 const SurfaceButton = styled.button`
