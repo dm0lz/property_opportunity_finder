@@ -3,6 +3,7 @@ class Api::ListingsController < ApplicationController
   def index
     @listings = Listing.where('square_meter_price >= 2800')
       .where(junk: false)
+      .where(external_provider: params[:providers].split(','))
       .where(postal_code: params[:zipcodes].split(','))
       .where(price: params[:start_price].to_i..params[:end_price].to_i)
       .where(surface: params[:min_surface].to_i..params[:max_surface].to_i)

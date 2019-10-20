@@ -68,6 +68,12 @@ const ZipcodeSelectionWrapper = styled.span`
   top: 11px;
   left: 145px;
 `;
+const ProviderSelectWrapper = styled.span`
+  display: inline-flex;
+  position: absolute;
+  top: 11px;
+  left: 430px;
+`;
 const PriceSliderWrapper = styled.span`
   position: relative;
   left: 277px;
@@ -125,11 +131,12 @@ export default class ListingContainer extends React.Component {
       sortBy: "first_publication_date",
       sortOrder: "desc",
       zipcodeOptions: [],
+      selectedZipcodeOptions: [],
+      selectedProviderOptions: ["leboncoin", "seloger"],
       startPrice: 50000,
       endPrice: 190000,
       minSurface: 15,
       maxSurface: 70,
-      selectedZipcodeOptions: [],
       city: "lyon",
       showSurfacePicker: false,
       showPricePicker: false
@@ -138,8 +145,13 @@ export default class ListingContainer extends React.Component {
   async componentDidMount() {
     const url = new URL(location.href);
     const zipcodes = url.searchParams.get("zipcodes");
+    const providers =
+      url.searchParams.get("providers") || this.state.selectedProviderOptions;
     const cityParam = url.searchParams.get("city") || this.state.city;
     const zipcodesInUrl = zipcodes === null ? [] : zipcodes.split(",");
+    const providersInUrl = Array.isArray(providers)
+      ? providers
+      : providers.split(",");
     const res = await axios.get(
       `/api/cities?city_name=${cityParam || this.state.city}`
     );
@@ -166,6 +178,7 @@ export default class ListingContainer extends React.Component {
         selectedZipcodeOptions: zipcodesInUrl.length
           ? zipcodesInUrl
           : city.zipcodes,
+        selectedProviderOptions: providersInUrl.length ? providersInUrl : [],
         zipcodeOptions: city.zipcodes.map(zip => {
           return { value: zip, label: zip };
         })
@@ -188,7 +201,9 @@ export default class ListingContainer extends React.Component {
         this.state.startPrice
       }&end_price=${this.state.endPrice}&min_surface=${
         this.state.minSurface
-      }&max_surface=${this.state.maxSurface}`
+      }&max_surface=${this.state.maxSurface}&providers=${
+        this.state.selectedProviderOptions
+      }`
     );
   };
   refreshListing = async () => {
@@ -222,6 +237,9 @@ export default class ListingContainer extends React.Component {
   handleZipcodeChange = e => {
     this.setState({ selectedZipcodeOptions: e }, () => this.updateUrl());
   };
+  handleProviderChange = e => {
+    this.setState({ selectedProviderOptions: e }, () => this.updateUrl());
+  };
   handlePriceRangeChange = values => {
     const [startPrice, endPrice] = values;
     this.setState({ startPrice, endPrice }, () => this.updateUrl());
@@ -232,13 +250,17 @@ export default class ListingContainer extends React.Component {
   };
   updateUrl = () => {
     const currentSearch = this.props.history.location.search;
-    const url = `?city=${this.state.city.toUpperCase()}&sort_by=${this.state
-      .sortBy || "first_publication_date"}&sort_order=${this.state.sortOrder ||
+    const url = `?providers=${
+      this.state.selectedProviderOptions
+    }&city=${this.state.city.toUpperCase()}&sort_by=${this.state.sortBy ||
+      "first_publication_date"}&sort_order=${this.state.sortOrder ||
       "desc"}&zipcodes=${this.state.selectedZipcodeOptions}&start_price=${
       this.state.startPrice
     }&end_price=${this.state.endPrice}&min_surface=${
       this.state.minSurface
-    }&max_surface=${this.state.maxSurface}`;
+    }&max_surface=${this.state.maxSurface}&providers=${
+      this.state.selectedProviderOptions
+    }`;
 
     this.props.history.push(url);
     this.getListing();
@@ -379,6 +401,22 @@ export default class ListingContainer extends React.Component {
               </SurfacePicker>
             )}
           </SurfaceButtonWrapper>
+          <ProviderSelectWrapper>
+            <MultiSelect
+              options={[
+                { label: "leboncoin", value: "leboncoin" },
+                { label: "Seloger", value: "seloger" }
+              ]}
+              selected={this.state.selectedProviderOptions}
+              onSelectedChanged={this.handleProviderChange}
+              overrideStrings={{
+                selectSomeItems: "Select Some items...",
+                allItemsAreSelected: "Providers",
+                selectAll: "Tous",
+                search: "Chercher"
+              }}
+            />
+          </ProviderSelectWrapper>
           <TotalCount className="badge badge-warning">
             {this.state.listingsCount} Annonces
           </TotalCount>
