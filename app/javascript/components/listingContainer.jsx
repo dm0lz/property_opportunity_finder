@@ -126,6 +126,8 @@ export default class ListingContainer extends React.Component {
       zipcodeOptions: [],
       startPrice: 50000,
       endPrice: 190000,
+      minSurface: 15,
+      maxSurface: 70,
       selectedZipcodeOptions: [],
       city: "lyon",
       showSurfacePicker: false,
@@ -156,6 +158,10 @@ export default class ListingContainer extends React.Component {
         startPrice:
           url.searchParams.get("start_price") || this.state.startPrice,
         endPrice: url.searchParams.get("end_price") || this.state.endPrice,
+        minSurface:
+          url.searchParams.get("min_surface") || this.state.minSurface,
+        maxSurface:
+          url.searchParams.get("max_surface") || this.state.maxSurface,
         selectedZipcodeOptions: zipcodesInUrl.length
           ? zipcodesInUrl
           : city.zipcodes,
@@ -179,7 +185,9 @@ export default class ListingContainer extends React.Component {
         "first_publication_date"}&sort_order=${this.state.sortOrder ||
         "desc"}&zipcodes=${this.state.selectedZipcodeOptions}&start_price=${
         this.state.startPrice
-      }&end_price=${this.state.endPrice}`
+      }&end_price=${this.state.endPrice}&min_surface=${
+        this.state.minSurface
+      }&max_surface=${this.state.maxSurface}`
     );
   };
   refreshListing = async () => {
@@ -217,13 +225,19 @@ export default class ListingContainer extends React.Component {
     const [startPrice, endPrice] = values;
     this.setState({ startPrice, endPrice }, () => this.updateUrl());
   };
+  handleSurfaceRangeChange = values => {
+    const [minSurface, maxSurface] = values;
+    this.setState({ minSurface, maxSurface }, () => this.updateUrl());
+  };
   updateUrl = () => {
     const currentSearch = this.props.history.location.search;
     const url = `?city=${this.state.city.toUpperCase()}&sort_by=${this.state
       .sortBy || "first_publication_date"}&sort_order=${this.state.sortOrder ||
       "desc"}&zipcodes=${this.state.selectedZipcodeOptions}&start_price=${
       this.state.startPrice
-    }&end_price=${this.state.endPrice}`;
+    }&end_price=${this.state.endPrice}&min_surface=${
+      this.state.minSurface
+    }&max_surface=${this.state.maxSurface}`;
 
     this.props.history.push(url);
     this.getListing();
@@ -334,7 +348,9 @@ export default class ListingContainer extends React.Component {
                   onRangeChange={this.handlePriceRangeChange}
                   startPrice={this.state.startPrice}
                   endPrice={this.state.endPrice}
-                  allowOverlap={true}
+                  maxPrice={600000}
+                  step={5000}
+                  unit={"€"}
                 />
               </PricePicker>
             )}
@@ -349,7 +365,18 @@ export default class ListingContainer extends React.Component {
             >
               Surface
             </SurfaceButton>
-            {this.state.showSurfacePicker && <SurfacePicker>tt</SurfacePicker>}
+            {this.state.showSurfacePicker && (
+              <SurfacePicker>
+                <RangeSlider
+                  onRangeChange={this.handleSurfaceRangeChange}
+                  startPrice={this.state.minSurface}
+                  endPrice={this.state.maxSurface}
+                  maxPrice={200}
+                  step={5}
+                  unit={"m2"}
+                />
+              </SurfacePicker>
+            )}
           </SurfaceButtonWrapper>
           <TotalCount className="badge badge-warning">
             {this.state.listingsCount} Annonces

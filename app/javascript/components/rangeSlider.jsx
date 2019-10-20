@@ -35,7 +35,7 @@ const MIN = 0;
 const MAX = 500000;
 export default class RangeSlider extends React.Component {
   state = {
-    values: [this.props.startPrice, this.props.endPrice]
+    values: [parseInt(this.props.startPrice), parseInt(this.props.endPrice)]
   };
   currencyFormat = num => {
     const number = parseInt(num);
@@ -75,9 +75,9 @@ export default class RangeSlider extends React.Component {
       >
         <Range
           values={this.state.values}
-          step={STEP}
+          step={this.props.step}
           min={MIN}
-          max={MAX}
+          max={this.props.maxPrice}
           onChange={values => {
             this.setState({ values });
           }}
@@ -105,7 +105,7 @@ export default class RangeSlider extends React.Component {
                     values: this.state.values,
                     colors: ["#ccc", "#ffc124", "#ccc"],
                     min: MIN,
-                    max: MAX
+                    max: this.props.maxPrice
                   }),
                   alignSelf: "center"
                 }}
@@ -148,8 +148,9 @@ export default class RangeSlider extends React.Component {
           }}
           id="output"
         >
-          {this.currencyFormat(this.state.values[0])}€ -{" "}
-          {this.currencyFormat(this.state.values[1])}€
+          {this.currencyFormat(this.state.values[0])}
+          {this.props.unit} - {this.currencyFormat(this.state.values[1])}
+          {this.props.unit}
         </output>
       </div>
     );

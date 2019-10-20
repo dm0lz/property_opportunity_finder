@@ -5,6 +5,7 @@ class Api::ListingsController < ApplicationController
       .where(junk: false)
       .where(postal_code: params[:zipcodes].split(','))
       .where(price: params[:start_price].to_i..params[:end_price].to_i)
+      .where(surface: params[:min_surface].to_i..params[:max_surface].to_i)
       .where.not(real_estate_type: 'parking')
       .where("first_publication_date >= :date", date: DateTime.current - 30.days)
       .order("#{params[:sort_by]} #{params[:sort_order].upcase}")
