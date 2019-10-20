@@ -105,6 +105,7 @@ const SurfacePicker = styled.div`
   padding: 10px;
   border: 1px solid #cacaca;
   border-radius: 3px;
+  transform: translate(-69px, 1px);
 `;
 const CitySelectionWrapper = styled.span`
   position: absolute;
