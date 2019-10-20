@@ -411,7 +411,7 @@ export default class ListingContainer extends React.Component {
               onSelectedChanged={this.handleProviderChange}
               overrideStrings={{
                 selectSomeItems: "Select Some items...",
-                allItemsAreSelected: "Providers",
+                allItemsAreSelected: "Provenance",
                 selectAll: "Tous",
                 search: "Chercher"
               }}
