@@ -285,6 +285,12 @@ export default class ListingContainer extends React.Component {
       () => this.updateUrl()
     );
   };
+  closeRangeSelectors = () => {
+    this.setState({
+      showSurfacePicker: false,
+      showPricePicker: false
+    });
+  };
   render() {
     const pageCount = Math.round(this.state.listingsCount / 25);
     const options = [
@@ -303,6 +309,7 @@ export default class ListingContainer extends React.Component {
     const zipcodeOptions = this.state.zipcodeOptions.sort(
       (a, b) => a.value - b.value
     );
+
     return (
       <div>
         <CtaWrapper>
@@ -320,7 +327,7 @@ export default class ListingContainer extends React.Component {
           >
             Remettre à zéro le listing
           </ResetButton> */}
-          <CitySelectionWrapper>
+          <CitySelectionWrapper onClick={this.closeRangeSelectors}>
             <AsyncSelect
               cacheOptions
               loadOptions={this.getOptions}
@@ -332,17 +339,7 @@ export default class ListingContainer extends React.Component {
             />
           </CitySelectionWrapper>
 
-          <ZipcodeSelectionWrapper>
-            {/* <Select
-              className="zipcode-select"
-              style={{
-                width: "150px"
-              }}
-              value={this.state.selectedZipcodeOptions}
-              onChange={this.handleZipcodeChange}
-              isMulti={true}
-              options={this.state.zipcodeOptions}
-            /> */}
+          <ZipcodeSelectionWrapper onClick={this.closeRangeSelectors}>
             <MultiSelect
               options={zipcodeOptions}
               selected={this.state.selectedZipcodeOptions}
@@ -403,7 +400,7 @@ export default class ListingContainer extends React.Component {
               </SurfacePicker>
             )}
           </SurfaceButtonWrapper>
-          <ProviderSelectWrapper>
+          <ProviderSelectWrapper onClick={this.closeRangeSelectors}>
             <MultiSelect
               options={[
                 { label: "leboncoin", value: "leboncoin" },
