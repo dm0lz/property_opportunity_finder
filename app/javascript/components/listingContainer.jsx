@@ -359,7 +359,8 @@ export default class ListingContainer extends React.Component {
             <PriceButton
               onClick={() =>
                 this.setState({
-                  showPricePicker: !this.state.showPricePicker
+                  showPricePicker: !this.state.showPricePicker,
+                  showSurfacePicker: false
                 })
               }
             >
@@ -382,7 +383,8 @@ export default class ListingContainer extends React.Component {
             <SurfaceButton
               onClick={() =>
                 this.setState({
-                  showSurfacePicker: !this.state.showSurfacePicker
+                  showSurfacePicker: !this.state.showSurfacePicker,
+                  showPricePicker: false
                 })
               }
             >
