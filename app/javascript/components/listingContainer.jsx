@@ -132,7 +132,7 @@ export default class ListingContainer extends React.Component {
       sortOrder: "desc",
       zipcodeOptions: [],
       selectedZipcodeOptions: [],
-      selectedProviderOptions: ["leboncoin", "seloger"],
+      selectedProviderOptions: ["leboncoin", "seloger", "bienici"],
       startPrice: 50000,
       endPrice: 190000,
       minSurface: 15,
@@ -404,12 +404,13 @@ export default class ListingContainer extends React.Component {
             <MultiSelect
               options={[
                 { label: "leboncoin", value: "leboncoin" },
-                { label: "Seloger", value: "seloger" }
+                { label: "seloger", value: "seloger" },
+                { label: "bienici", value: "bienici" }
               ]}
               selected={this.state.selectedProviderOptions}
               onSelectedChanged={this.handleProviderChange}
               overrideStrings={{
-                selectSomeItems: "Select Some items...",
+                selectSomeItems: "Sélectionner",
                 allItemsAreSelected: "Provenance",
                 selectAll: "Tous",
                 search: "Chercher"

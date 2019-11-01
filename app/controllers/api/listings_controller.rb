@@ -1,7 +1,7 @@
 class Api::ListingsController < ApplicationController
 
   def index
-    @listings = Listing.where('square_meter_price >= 2800')
+    @listings = Listing.where('square_meter_price >= 2000')
       .where(junk: false)
       .where(external_provider: params[:providers].split(','))
       .where(postal_code: params[:zipcodes].split(','))
